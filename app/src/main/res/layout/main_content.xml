@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.etsy.android.grid.StaggeredGridView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/grid_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:item_margin="@dimen/default_padding"
+    app:column_count_portrait="@integer/column_count_portrait"
+    app:column_count_landscape="@integer/column_count_landscape"
+    app:grid_paddingLeft="@dimen/default_padding"
+    app:grid_paddingRight="@dimen/default_padding"
+    app:grid_paddingTop="@dimen/default_padding"
+    app:grid_paddingBottom="@dimen/default_padding"
+    />
