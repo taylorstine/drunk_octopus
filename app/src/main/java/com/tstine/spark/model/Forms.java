@@ -1,11 +1,11 @@
 
 package com.tstine.spark.model;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
-@Generated("org.jsonschema2pojo")
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+
 public class Forms {
 
     @Expose

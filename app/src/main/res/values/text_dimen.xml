@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_title_text_size">10sp</dimen>
+    <dimen name="small_description_text_size">8sp</dimen>
+    <dimen name="small_number_text_size">8sp</dimen>
+    <dimen name="small_username_text_size">8sp</dimen>
+    <dimen name="small_category_text_size">8sp</dimen>
+</resources>

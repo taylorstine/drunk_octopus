@@ -5,4 +5,42 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="banner_holder">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/banner_button_background</item>
+        <item name="android:paddingRight">@dimen/button_banner_right_padding</item>
+        <item name="android:paddingLeft">@dimen/button_banner_left_padding</item>
+        <item name="android:paddingTop">@dimen/button_banner_top_padding</item>
+        <item name="android:paddingBottom">@dimen/button_banner_bottom_padding</item>
+    </style>
+
+    <style name="spark_text" parent="android:TextAppearance.Medium">
+        <item name="android:layout_margin">@dimen/text_view_spacing</item>
+        <item name="android:textScaleX">.95</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+    <style name="spark_text.small_title">
+        <item name="android:textSize">@dimen/small_title_text_size</item>
+    </style>
+
+    <style name="spark_text.small_description">
+        <item name="android:textSize">@dimen/small_description_text_size</item>
+    </style>
+
+    <style name="spark_text.small_number">
+        <item name="android:textSize">@dimen/small_number_text_size</item>
+    </style>
+
+    <style name="spark_text.small_username">
+        <item name="android:textSize">@dimen/small_username_text_size</item>
+        <item name="android:textColor">@color/username_text</item>
+    </style>
+
+    <style name="spark_text.category_text">
+        <item name="android:textSize">@dimen/small_category_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+
+    </style>
 </resources>

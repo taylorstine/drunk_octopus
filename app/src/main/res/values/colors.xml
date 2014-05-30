@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="button_banner_background">#B8FFFFFF</color>
+    <color name="text_color">#4D2D81</color>
+    <color name="username_text">#8E8E8E</color>
+</resources>
