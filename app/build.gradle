@@ -1,5 +1,5 @@
 apply plugin: 'android'
-
+apply plugin: 'android-apt'
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
@@ -23,7 +23,17 @@ android {
     }
 }
 
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile
+        resourcePackageName "com.tstine.spark"
+    }
+}
+
+
 dependencies {
+    apt "org.androidannotations:androidannotations:3.0+"
+    compile "org.androidannotations:androidannotations-api:3.0+"
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.etsy.android.grid:library:1.0.5'
     compile 'com.jakewharton:butterknife:5.1.0'
@@ -32,5 +42,8 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0-RC1'
     compile 'org.apache.commons:commons-lang3:3.0'
     compile 'com.squareup.picasso:picasso:2.3.1'
+    //compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    //compile 'org.springframework.android:spring-android-auth:1.0.1.RELEASE'
+    //compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

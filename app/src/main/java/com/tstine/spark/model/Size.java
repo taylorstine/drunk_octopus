@@ -8,23 +8,23 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Size {
 
     @Expose
-    private String width;
+    private Integer width;
     @Expose
-    private String height;
+    private Integer height;
 
-    public String getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(String width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public String getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

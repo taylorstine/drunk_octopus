@@ -5,12 +5,11 @@ import android.text.TextUtils;
 import retrofit.RetrofitError;
 
 /**
- * Adapts the retrofit error to the fetch error interface
+ * Adapts the retrofit error to the fetchProducts error interface
  */
 public class FetchError {
 
     RetrofitError mError;
-
     public FetchError(RetrofitError error) {
         mError = error;
     }

@@ -8,11 +8,17 @@
     <style name="banner_holder">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/banner_button_background</item>
+
         <item name="android:paddingRight">@dimen/button_banner_right_padding</item>
         <item name="android:paddingLeft">@dimen/button_banner_left_padding</item>
         <item name="android:paddingTop">@dimen/button_banner_top_padding</item>
         <item name="android:paddingBottom">@dimen/button_banner_bottom_padding</item>
+    </style>
+    <style name="banner_holder.top">
+        <item name="android:background">@drawable/top_banner_button_background</item>
+    </style>
+    <style name="banner_holder.bottom">
+        <item name="android:background">@drawable/bottom_banner_button_background</item>
     </style>
 
     <style name="spark_text" parent="android:TextAppearance.Medium">
@@ -41,6 +47,10 @@
     <style name="spark_text.category_text">
         <item name="android:textSize">@dimen/small_category_text_size</item>
         <item name="android:textColor">@android:color/black</item>
+    </style>
 
+    <style name="spark_text.small_number.price">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/price_text</item>
     </style>
 </resources>

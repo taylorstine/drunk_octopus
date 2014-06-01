@@ -3,9 +3,11 @@
 buildscript {
     repositories {
         mavenCentral()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.2+'
     }
 }
 
@@ -13,5 +15,7 @@ allprojects {
     repositories {
         mavenCentral()
         mavenLocal()
+
+
     }
 }

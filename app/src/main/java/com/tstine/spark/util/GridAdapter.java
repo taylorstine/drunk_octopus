@@ -7,25 +7,24 @@ import android.widget.BaseAdapter;
 
 import com.tstine.spark.model.Product;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by taylorstine on 5/29/14.
  */
+@EBean(scope = EBean.Scope.Singleton)
 public class GridAdapter extends BaseAdapter{
-    protected Context mContext;
-    protected ListViewCellFactory mViewFactory;
 
-
+    @Bean GridCellViewFactory mViewFactory;
     protected List<Product> mProducts;
-    public GridAdapter(Context context, ListViewCellFactory viewFactory){
-        this.mContext = context;
-        this.mProducts = new ArrayList<Product>();
-        for (int idx = 0; idx < 40; idx++){
-            mProducts.add(new Product());
-        }
-        this.mViewFactory = viewFactory;
+
+    public GridAdapter(){
+            this.mProducts = new ArrayList<Product>();
     }
 
     public void appendItems(List<Product> products){

@@ -4,19 +4,27 @@
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:background="@android:color/holo_red_dark"
+              android:background="@drawable/product_background"
     >
-    <ImageView
-        android:id="@+id/product_image"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/product_image_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        />
+        android:layout_centerHorizontal="true"
+        android:padding="2dp"
+        >
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            />
+    </FrameLayout>
     <FrameLayout
         android:id="@+id/add_to_cart_banner_button"
-        style="@style/banner_holder"
-        android:layout_alignParentTop="true"
+        style="@style/banner_holder.top"
+        android:layout_alignTop="@id/product_image_container"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/banner_edge_spacing"
         >
@@ -29,9 +37,9 @@
 
     <FrameLayout
         android:id="@+id/like_banner_button"
-        style="@style/banner_holder"
+        style="@style/banner_holder.top"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/product_image_container"
         android:layout_marginRight="@dimen/banner_edge_spacing"
         >
         <ImageView
@@ -39,8 +47,22 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_to_cart_05"
             />
-
     </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/price_container"
+        style="@style/banner_holder.bottom"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/banner_edge_spacing"
+        android:layout_alignBottom="@id/product_image_container"
+        >
+        <TextView
+            android:id="@+id/price_text"
+            style="@style/spark_text.small_number.price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
 
     <TextView
         android:id="@+id/product_title"
@@ -48,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/product_image_container"
         android:maxLines="2"
         android:ellipsize="end"
         />

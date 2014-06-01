@@ -1,27 +1,30 @@
-package com.tstine.spark.util;
+package com.tstine.spark.scrollstate;
 
 import android.widget.AbsListView;
 
-import com.tstine.spark.mixin.StateMaintainer;
 import com.tstine.spark.model.Product;
+import com.tstine.spark.util.FetchError;
+import com.tstine.spark.util.Logger;
+import com.tstine.spark.rest.Fetcher;
+
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Trace;
 
 import java.util.List;
 
 /**
  * Created by taylorstine on 5/30/14.
  */
+@EBean
 public class ScrollStateWaiting extends ScrollState{
 
-    public ScrollStateWaiting(ProductFetcher fetcher, GridAdapter adapter, StateMaintainer maintainer) {
-        super(fetcher, adapter, maintainer);
-    }
-
+    @Trace
     @Override
     public void fetch(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
         if (needsToFetchMoreProducts(firstVisibleItem, visibleItemCount, totalItemCount)){
-            mStateMaintainer.setState(new FetchingState(mFetcher, mGridAdapter, mStateMaintainer));
+            mStateMaintainer.setState(new ScrollStateFetching());
             final ScrollState state = this;
-            mFetcher.fetch(new ProductFetcher.IFetchedIt() {
+            mFetcher.fetchProducts(new Fetcher.IFetchedIt() {
                 @Override
                 public void onFetch(List<Product> products) {
                     mGridAdapter.appendItems(products);
@@ -30,8 +33,9 @@ public class ScrollStateWaiting extends ScrollState{
                 }
 
                 @Override
-                public void onError(FetchError error){
+                public void onError(FetchError error) {
                     mStateMaintainer.setState(state);
+                    Logger.log("Got fetchProducts error: " + error.getReason());
                 }
             });
         }
@@ -40,7 +44,7 @@ public class ScrollStateWaiting extends ScrollState{
 
 
     public boolean needsToFetchMoreProducts(int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        int lastVisibleItem =firstVisibleItem + visibleItemCount;
+        int lastVisibleItem = firstVisibleItem + visibleItemCount;
         int itemsNotSeen = totalItemCount - lastVisibleItem;
         return itemsNotSeen < getExtraItemPadding();
     }

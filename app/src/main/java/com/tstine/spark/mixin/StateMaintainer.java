@@ -1,6 +1,6 @@
 package com.tstine.spark.mixin;
 
-import com.tstine.spark.util.ScrollState;
+import com.tstine.spark.scrollstate.ScrollState;
 
 /**
  * Created by taylorstine on 5/30/14.
