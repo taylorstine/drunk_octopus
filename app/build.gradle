@@ -42,6 +42,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0-RC1'
     compile 'org.apache.commons:commons-lang3:3.0'
     compile 'com.squareup.picasso:picasso:2.3.1'
+    compile 'com.facebook.rebound:rebound:0.3.3'
     compile('de.keyboardsurfer.android.widget:crouton:1.8.4') {
         // exclusion is not neccessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'

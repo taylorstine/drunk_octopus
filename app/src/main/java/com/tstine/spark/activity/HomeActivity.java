@@ -1,5 +1,6 @@
 package com.tstine.spark.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.AbsListView;
 
@@ -21,7 +22,7 @@ import org.androidannotations.annotations.ViewById;
  * Created by taylorstine on 5/29/14.
  */
 @EActivity(R.layout.main_content)
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends Activity {
 
     @ViewById AbsListView grid_view;
     @Bean ViewClickDelegate mClickDelegate;
@@ -33,12 +34,7 @@ public class HomeActivity extends BaseActivity {
     protected void initProductList(){
         grid_view.setAdapter(mAdapter);
         grid_view.setOnScrollListener(mScrollListenerDelegate);
-    }
-
-    @ItemClick(R.id.grid_view)
-    public void itemClicked(Product product){
-
-        mClickDelegate.doItemClick(product);
+        grid_view.setOnItemClickListener(mClickDelegate);
     }
 
     @ItemLongClick(R.id.grid_view)
