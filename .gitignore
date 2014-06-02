@@ -4,4 +4,4 @@
 .DS_Store
 *.iml
 local.properties
-build
+build/
