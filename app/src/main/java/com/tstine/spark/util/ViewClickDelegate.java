@@ -54,7 +54,6 @@ public class ViewClickDelegate implements AdapterView.OnItemClickListener{
     }
 
     public void doProductLike(final View view, final Product product){
-
         SpringSystem springSystem = SpringSystem.create();
         Spring spring = springSystem.createSpring();
         spring.addListener(new SimpleSpringListener(){
