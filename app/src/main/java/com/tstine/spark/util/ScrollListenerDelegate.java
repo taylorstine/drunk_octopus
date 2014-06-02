@@ -2,13 +2,17 @@ package com.tstine.spark.util;
 
 import android.widget.AbsListView;
 
+import com.tstine.spark.mixin.ScrollStateSubject;
 import com.tstine.spark.mixin.StateMaintainer;
-import com.tstine.spark.scrollstate.ScrollState;
-import com.tstine.spark.scrollstate.ScrollStateWaiting;
+import com.tstine.spark.fetchstate.FetchState;
+import com.tstine.spark.fetchstate.FetchStateWaiting;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by taylorstine on 6/1/14.
@@ -16,8 +20,7 @@ import org.androidannotations.annotations.EBean;
 @EBean(scope = EBean.Scope.Singleton)
 public class ScrollListenerDelegate implements AbsListView.OnScrollListener, StateMaintainer{
 
-    @Bean(ScrollStateWaiting.class)
-    ScrollState mState;
+    @Bean(FetchStateWaiting.class) FetchState mState;
 
     @AfterInject
     protected void afterInejct(){
@@ -26,7 +29,6 @@ public class ScrollListenerDelegate implements AbsListView.OnScrollListener, Sta
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-
     }
 
     @Override
@@ -37,7 +39,13 @@ public class ScrollListenerDelegate implements AbsListView.OnScrollListener, Sta
     }
 
     @Override
-    public void setState(ScrollState state) {
+    public void setState(FetchState state) {
         this.mState = state;
     }
+
+    @Override
+    public FetchState getState() {
+        return this.mState;
+    }
+
 }

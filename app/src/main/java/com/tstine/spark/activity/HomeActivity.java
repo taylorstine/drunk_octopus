@@ -23,15 +23,10 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.main_content)
 public class HomeActivity extends BaseActivity {
 
-    @ViewById  AbsListView grid_view;
+    @ViewById AbsListView grid_view;
     @Bean ViewClickDelegate mClickDelegate;
     @Bean ScrollListenerDelegate mScrollListenerDelegate;
     @Bean GridAdapter mAdapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Trace
     @AfterViews
@@ -42,6 +37,7 @@ public class HomeActivity extends BaseActivity {
 
     @ItemClick(R.id.grid_view)
     public void itemClicked(Product product){
+
         mClickDelegate.doItemClick(product);
     }
 

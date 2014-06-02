@@ -1,7 +1,8 @@
-package com.tstine.spark.scrollstate;
+package com.tstine.spark.fetchstate;
 
 import android.widget.AbsListView;
 
+import com.tstine.spark.mixin.ScrollStateObserver;
 import com.tstine.spark.mixin.StateMaintainer;
 import com.tstine.spark.rest.Fetcher;
 import com.tstine.spark.util.GridAdapter;
@@ -13,7 +14,7 @@ import org.androidannotations.annotations.EBean;
  * Created by taylorstine on 5/30/14.
  */
 @EBean
-public abstract class ScrollState {
+public abstract class FetchState {
 
     @Bean
     Fetcher mFetcher;

@@ -1,4 +1,4 @@
-package com.tstine.spark.scrollstate;
+package com.tstine.spark.fetchstate;
 
 import android.widget.AbsListView;
 
@@ -16,14 +16,14 @@ import java.util.List;
  * Created by taylorstine on 5/30/14.
  */
 @EBean
-public class ScrollStateWaiting extends ScrollState{
+public class FetchStateWaiting extends FetchState {
 
     @Trace
     @Override
     public void fetch(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
         if (needsToFetchMoreProducts(firstVisibleItem, visibleItemCount, totalItemCount)){
-            mStateMaintainer.setState(new ScrollStateFetching());
-            final ScrollState state = this;
+            mStateMaintainer.setState(new FetchStateFetching());
+            final FetchState state = this;
             mFetcher.fetchProducts(new Fetcher.IFetchedIt() {
                 @Override
                 public void onFetch(List<Product> products) {

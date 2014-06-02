@@ -18,8 +18,11 @@ import android.widget.ImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.tstine.spark.R;
+import com.tstine.spark.mixin.ScrollStateObserver;
+import com.tstine.spark.mixin.ScrollStateSubject;
 import com.tstine.spark.model.Product;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -27,11 +30,10 @@ import org.androidannotations.annotations.RootContext;
  * Created by taylorstine on 5/30/14.
  */
 @EBean
-public class GridCellViewFactory {
+public class GridCellViewFactory{
     @RootContext Context mContext;
 
     public View makeView(Product product, View convertView, ViewGroup parent){
-
         if (convertView == null){
             LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.product_cell, parent, false);
@@ -52,10 +54,8 @@ public class GridCellViewFactory {
         return convertView;
     }
 
-    protected void handleProductImage(final ViewHolder holder, final Product product, final View parent){
+    public void handleProductImage(final ViewHolder holder, final Product product, final View parent){
         final ImageView imageView = holder.product_image;
-        final ImageView tempImageView = holder.temp_product_image;
-
         final ColorDrawable placeHolder = new ColorDrawable();
         try {
             placeHolder.setColor(Color.parseColor(product.getImage().getHolding_color()));
@@ -71,9 +71,7 @@ public class GridCellViewFactory {
             width = (int)(Math.random() * 400 + 150);
             height = (int)(Math.random() * 400 + 150);
         }
-
         final float imageAspect = (float)height/(float)width;
-
         parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -92,47 +90,11 @@ public class GridCellViewFactory {
             .into(imageView, new Callback() {
                 @Override
                 public void onSuccess() {
-
-                    setImageViewSize(imageView, parent, imageAspect);
-                    setImageViewSize(tempImageView, parent, imageAspect);
-
+                    /*setImageViewSize(imageView, parent, imageAspect);
                     int radius = mContext.getResources().getDimensionPixelOffset(R.dimen.small_product_rectangle_corner_radius);
                     Bitmap bitmap =((BitmapDrawable) imageView.getDrawable()).getBitmap();
                     Bitmap rounded = ImageUtils.getRoundedCornerBitmap(bitmap, radius);
-                    imageView.setImageDrawable(placeHolder);
-
-                    tempImageView.setImageBitmap(rounded);
-                    tempImageView.setAlpha(0.5f);
-                    tempImageView.setVisibility(View.VISIBLE);
-
-                    ValueAnimator animator = ObjectAnimator.ofFloat(tempImageView, "alpha", 0.0f, 1.0f);
-                    animator.setDuration(8000L);
-                    animator.setInterpolator(new DecelerateInterpolator());
-                    animator.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            imageView.setImageBitmap(((BitmapDrawable)tempImageView.getDrawable()).getBitmap());
-                            //imageView.setImageDrawable(tempImageView.getDrawable());
-                            tempImageView.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-                    animator.start();
-
+                    imageView.setImageBitmap(rounded);*/
                 }
 
                 @Override
@@ -141,9 +103,9 @@ public class GridCellViewFactory {
                 }
             });
 
-    }
+    };
 
-    private void setImageViewSize(View imageView, View parent, float imageAspect){
+    protected void setImageViewSize(View imageView, View parent, float imageAspect){
         int width = parent.getMeasuredWidth();
         int height = (int)(imageAspect * (float)parent.getMeasuredWidth());
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
@@ -156,6 +118,7 @@ public class GridCellViewFactory {
         params.width = width;
         imageView.setLayoutParams(params);
     }
+
     protected void handleProductTitle(ViewHolder holder, Product product){
         if (product != null) {
             holder.product_title.setText(product.getTitle());

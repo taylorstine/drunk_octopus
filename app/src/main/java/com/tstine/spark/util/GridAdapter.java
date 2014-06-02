@@ -53,4 +53,8 @@ public class GridAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         return mViewFactory.makeView(getItem(position), convertView, parent);
     }
+
+    public GridCellViewFactory getViewFactory() {
+        return mViewFactory;
+    }
 }
