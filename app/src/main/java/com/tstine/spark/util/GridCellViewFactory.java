@@ -1,26 +1,27 @@
 package com.tstine.spark.util;
 
-import android.app.ActionBar;
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.tstine.spark.R;
 import com.tstine.spark.model.Product;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by taylorstine on 5/30/14.
@@ -46,11 +47,14 @@ public class GridCellViewFactory {
         handleProductPrice(holder, product);
         handleProductCategory(holder, product);
 
+        holder.comment_count_container.setVisibility(View.GONE);
+
         return convertView;
     }
 
     protected void handleProductImage(final ViewHolder holder, final Product product, final View parent){
-        final ImageView imageView = holder.getvProductImage();
+        final ImageView imageView = holder.product_image;
+        final ImageView tempImageView = holder.temp_product_image;
 
         final ColorDrawable placeHolder = new ColorDrawable();
         try {
@@ -59,31 +63,6 @@ public class GridCellViewFactory {
             placeHolder.setColor(Color.BLUE);
         }
 
-        imageView.setImageDrawable(placeHolder);
-
-        final ViewTreeObserver observer = parent.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (observer != null && observer.isAlive()) {
-                    observer.removeOnGlobalLayoutListener(this);
-                }
-                int parentWidth = parent.getMeasuredWidth();
-                int parentHeight = parent.getMeasuredHeight();
-                if (imageView != null) {
-                    if (product.getImage() != null && product.getImage().getUrl() != null) {
-                        Picasso.with(mContext)
-                            .load(product.getImage().getUrl())
-                            .placeholder(placeHolder)
-                            .skipMemoryCache()
-                            .error(placeHolder)
-                            .resize(parentWidth, parentHeight)
-                            .centerInside()
-                            .into(imageView);
-                    }
-                }
-            }
-        });
         int width, height;
         try {
             width = product.getImage().getSize().getWidth();
@@ -93,159 +72,125 @@ public class GridCellViewFactory {
             height = (int)(Math.random() * 400 + 150);
         }
 
+        final float imageAspect = (float)height/(float)width;
+
+        parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                parent.getViewTreeObserver().removeOnPreDrawListener(this);
+                setImageViewSize(imageView, parent, imageAspect);
+                return false;
+            }
+        });
+        Picasso.with(mContext)
+            .load(product.getImage().getUrl())
+            .placeholder(placeHolder)
+            .skipMemoryCache()
+            .error(new ColorDrawable(Color.RED))
+            .resize(width, height)
+            .centerInside()
+            .into(imageView, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                    setImageViewSize(imageView, parent, imageAspect);
+                    setImageViewSize(tempImageView, parent, imageAspect);
+
+                    int radius = mContext.getResources().getDimensionPixelOffset(R.dimen.small_product_rectangle_corner_radius);
+                    Bitmap bitmap =((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    Bitmap rounded = ImageUtils.getRoundedCornerBitmap(bitmap, radius);
+                    imageView.setImageDrawable(placeHolder);
+
+                    tempImageView.setImageBitmap(rounded);
+                    tempImageView.setAlpha(0.5f);
+                    tempImageView.setVisibility(View.VISIBLE);
+
+                    ValueAnimator animator = ObjectAnimator.ofFloat(tempImageView, "alpha", 0.0f, 1.0f);
+                    animator.setDuration(8000L);
+                    animator.setInterpolator(new DecelerateInterpolator());
+                    animator.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            imageView.setImageBitmap(((BitmapDrawable)tempImageView.getDrawable()).getBitmap());
+                            //imageView.setImageDrawable(tempImageView.getDrawable());
+                            tempImageView.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+                    animator.start();
+
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+
+    }
+
+    private void setImageViewSize(View imageView, View parent, float imageAspect){
+        int width = parent.getMeasuredWidth();
+        int height = (int)(imageAspect * (float)parent.getMeasuredWidth());
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
-        if (params == null){
+        if (params == null ){
             params = new ViewGroup.LayoutParams(width, height);
         }
 
-        params.width = width;
+        Logger.log("parent width: %d, parent height: %d; image view width %d", parent.getMeasuredWidth(), parent.getMeasuredHeight(), params.width);
         params.height = height;
-
+        params.width = width;
         imageView.setLayoutParams(params);
     }
-
     protected void handleProductTitle(ViewHolder holder, Product product){
         if (product != null) {
-            holder.getvProductTitle().setText(product.getTitle());
+            holder.product_title.setText(product.getTitle());
         }
     }
 
     protected void handleProductLikeCount(ViewHolder holder, Product product){
         if (product != null) {
-            holder.getvLikeCountText().setText(String.valueOf(product.getLike_count()));
+            holder.like_count_text.setText(String.valueOf(product.getLike_count()));
         }
     }
 
     protected void handleProductCommentCount(ViewHolder holder, Product product){
         if (product != null) {
-            holder.getvCommentCountText().setText(String.valueOf(product.getComment_count()));
+            holder.comment_count_text.setText(String.valueOf(product.getComment_count()));
         }
     }
 
     protected void handleProductUserName(ViewHolder holder, Product product){
-        holder.getvUserNameText().setText("The User");
+        holder.user_name_text.setText("The User");
     }
 
     protected void handleProductPrice(ViewHolder holder, Product product){
-        try {
+        /*try {
             holder.getvPriceText().setText(String.valueOf(product.getPrice()));
-        }catch(NullPointerException e){}
+        }catch(NullPointerException e){}*/
     }
 
     protected void handleProductUserImage(ViewHolder holder, Product product){
-        holder.getvUserImage().setImageDrawable(new ColorDrawable(Color.GREEN));
+        //holder.user_image.setImageDrawable(new ColorDrawable(Color.GREEN));
     }
 
     protected void handleProductCategory(ViewHolder holder, Product product){
         if (product != null) {
-            holder.getvCategoryText().setText(product.getCategory());
-        }
-    }
-
-    public static class ViewHolder{
-
-        @InjectView(R.id.product_image) ImageView vProductImage;
-        @InjectView(R.id.add_to_cart_banner_button) View vAddToCartBannerButton;
-        @InjectView(R.id.like_banner_button) View vLikeBannerButton;
-        @InjectView(R.id.product_title) TextView vProductTitle;
-        @InjectView(R.id.like_count_text) TextView vLikeCountText;
-        @InjectView(R.id.comment_count_text)TextView vCommentCountText;
-        @InjectView(R.id.user_container) View vUserContainer;
-        @InjectView(R.id.user_image) ImageView vUserImage;
-        @InjectView(R.id.user_name_text) TextView vUserNameText;
-        @InjectView(R.id.category_text) TextView vCategoryText;
-        @InjectView(R.id.price_text) TextView vPriceText;
-
-        public ViewHolder(View view){
-            ButterKnife.inject(this, view);
-        }
-
-        public ImageView getvProductImage() {
-            return vProductImage;
-        }
-
-        public void setvProductImage(ImageView vProductImage) {
-            this.vProductImage = vProductImage;
-        }
-
-        public View getvAddToCartBannerButton() {
-            return vAddToCartBannerButton;
-        }
-
-        public void setvAddToCartBannerButton(View vAddToCartBannerButton) {
-            this.vAddToCartBannerButton = vAddToCartBannerButton;
-        }
-
-        public View getvLikeBannerButton() {
-            return vLikeBannerButton;
-        }
-
-        public void setvLikeBannerButton(View vLikeBannerButton) {
-            this.vLikeBannerButton = vLikeBannerButton;
-        }
-
-        public TextView getvProductTitle() {
-            return vProductTitle;
-        }
-
-        public void setvProductTitle(TextView vProductTitle) {
-            this.vProductTitle = vProductTitle;
-        }
-
-        public TextView getvLikeCountText() {
-            return vLikeCountText;
-        }
-
-        public void setvLikeCountText(TextView vLikeCountText) {
-            this.vLikeCountText = vLikeCountText;
-        }
-
-        public TextView getvCommentCountText() {
-            return vCommentCountText;
-        }
-
-        public void setvCommentCountText(TextView vCommentCountText) {
-            this.vCommentCountText = vCommentCountText;
-        }
-
-        public View getvUserContainer() {
-            return vUserContainer;
-        }
-
-        public void setvUserContainer(View vUserContainer) {
-            this.vUserContainer = vUserContainer;
-        }
-
-        public ImageView getvUserImage() {
-            return vUserImage;
-        }
-
-        public void setvUserImage(ImageView vUserImage) {
-            this.vUserImage = vUserImage;
-        }
-
-        public TextView getvUserNameText() {
-            return vUserNameText;
-        }
-
-        public void setvUserNameText(TextView vUserNameText) {
-            this.vUserNameText = vUserNameText;
-        }
-
-        public TextView getvCategoryText() {
-            return vCategoryText;
-        }
-
-        public void setvCategoryText(TextView vCategoryText) {
-            this.vCategoryText = vCategoryText;
-        }
-
-        public TextView getvPriceText() {
-            return vPriceText;
-        }
-
-        public void setvPriceText(TextView vPriceText) {
-            this.vPriceText = vPriceText;
+            holder.category_text.setText(product.getCategory());
         }
     }
 }

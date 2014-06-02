@@ -2,13 +2,14 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="default_padding">8dp</dimen>
+    <dimen name="default_padding">6dp</dimen>
+    <dimen name="item_margin">10dp</dimen>
 
     <dimen name="button_banner_top_padding">8dp</dimen>
     <dimen name="button_banner_bottom_padding">2dp</dimen>
     <dimen name="button_banner_left_padding">6dp</dimen>
     <dimen name="button_banner_right_padding">6dp</dimen>
     <dimen name="banner_edge_spacing">8dp</dimen>
-    <dimen name="text_view_spacing">6dp</dimen>
+    <dimen name="text_view_spacing">2dp</dimen>
 
 </resources>

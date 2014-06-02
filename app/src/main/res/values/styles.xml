@@ -22,7 +22,6 @@
     </style>
 
     <style name="spark_text" parent="android:TextAppearance.Medium">
-        <item name="android:layout_margin">@dimen/text_view_spacing</item>
         <item name="android:textScaleX">.95</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:fontFamily">sans-serif-light</item>

@@ -2,6 +2,9 @@
 <resources>
     <color name="button_banner_background">#B8FFFFFF</color>
     <color name="text_color">#4D2D81</color>
-    <color name="username_text">#8E8E8E</color>
+    <color name="username_text">#333333</color>
     <color name="price_text">#15921e</color>
+    <color name="product_border">#989898</color>
+    <color name="product_cell_background">#e7e7e7</color>
+    <color name="main_background">#333333</color>
 </resources>
