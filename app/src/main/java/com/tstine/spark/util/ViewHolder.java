@@ -15,7 +15,6 @@ import butterknife.InjectView;
 */
 public class ViewHolder {
     @InjectView(R.id.product_image) ImageView product_image;
-    @InjectView(R.id.temp_product_image) ImageView temp_product_image;
     //@InjectView(R.id.product_imageview_switcher)  ImageSwitcher product_imageview_switcher;
     //@InjectView(R.id.add_to_cart_banner_button) View vAddToCartBannerButton;
     //@InjectView(R.id.like_banner_button) View vLikeBannerButton;
