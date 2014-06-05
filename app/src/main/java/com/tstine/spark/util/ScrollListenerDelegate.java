@@ -18,7 +18,7 @@ import java.util.List;
  * Created by taylorstine on 6/1/14.
  */
 @EBean(scope = EBean.Scope.Singleton)
-public class ScrollListenerDelegate implements AbsListView.OnScrollListener, StateMaintainer{
+public class ScrollListenerDelegate extends  ScrollListenerDecorator implements StateMaintainer{
 
     @Bean(FetchStateWaiting.class) FetchState mState;
 
@@ -29,6 +29,7 @@ public class ScrollListenerDelegate implements AbsListView.OnScrollListener, Sta
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
+        super.onScrollStateChanged(view, scrollState);
     }
 
     @Override
@@ -36,6 +37,7 @@ public class ScrollListenerDelegate implements AbsListView.OnScrollListener, Sta
         if (mState != null){
             mState.fetch(view, firstVisibleItem, visibleItemCount, totalItemCount);
         }
+        super.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
     }
 
     @Override

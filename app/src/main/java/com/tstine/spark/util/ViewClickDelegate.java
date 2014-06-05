@@ -6,8 +6,12 @@ import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
 import com.tstine.spark.R;
+import com.tstine.spark.activity.HomeActivity;
+import com.tstine.spark.activity.HomeActivity_;
 import com.tstine.spark.model.Product;
+import com.tstine.spark.rest.GsonOverlord;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -44,6 +48,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 @EBean
 public class ViewClickDelegate implements AdapterView.OnItemClickListener{
     @RootContext  Activity mActivity;
+    @Bean GsonOverlord mGsonOverlord;
     private Handler mHandler;
     private boolean mNoClickState;
 
@@ -60,28 +65,7 @@ public class ViewClickDelegate implements AdapterView.OnItemClickListener{
     }
 
     public void doProductInformationClick(Product product, AdapterView<?> parent, View viewClicked, int position, long id){
-        View image = viewClicked.findViewById(R.id.product_image);
-
-        float xCenter = image.getX() + viewClicked.getX() + (float)image.getWidth() / 2.0f;
-        float yCenter = image.getY() + viewClicked.getY() +(float)image.getHeight() / 2.0f;
-
-        Point size = new Point();
-        mActivity.getWindowManager().getDefaultDisplay().getSize(size);
-
-        float scaleFactor = (float)size.x / (float)image.getWidth();
-        Logger.log("touch: (" + xCenter + ", " + yCenter + ")");
-        Logger.log("imageview x: " + image.getX() + ", y: " + image.getY());
-
-        parent.setPivotX(xCenter);
-        parent.setPivotY(yCenter);
-        PropertyValuesHolder scaleX = PropertyValuesHolder
-            .ofFloat("scaleX", 1.0f, scaleFactor);
-        PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.0f, scaleFactor);
-        ValueAnimator animator = ObjectAnimator.ofPropertyValuesHolder(parent, scaleX, scaleY);
-        animator.setDuration(500);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.start();
-
+        HomeActivity_.intent(mActivity).productData(mGsonOverlord.humblyRequestGson().toJson(product,Product.class)).start();
         //dumpScreenToBitmap(view, parent);
         //zoomInToBitmap();
         //startProductActivity();

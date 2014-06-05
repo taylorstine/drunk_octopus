@@ -35,6 +35,7 @@ public class FetchStateWaiting extends FetchState {
                 @Override
                 public void onError(FetchError error) {
                     mStateMaintainer.setState(state);
+
                     Logger.log("Got fetchProducts error: " + error.getReason());
                 }
             });

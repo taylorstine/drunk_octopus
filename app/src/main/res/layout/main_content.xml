@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<com.etsy.android.grid.StaggeredGridView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/grid_view"
+
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:item_margin="@dimen/item_margin"
-    app:column_count_portrait="@integer/column_count_portrait"
-    app:column_count_landscape="@integer/column_count_landscape"
-    app:grid_paddingLeft="@dimen/grid_left_padding"
-    app:grid_paddingRight="@dimen/grid_right_padding"
-    app:grid_paddingTop="@dimen/default_padding"
-    app:grid_paddingBottom="@dimen/default_padding"
+    android:orientation="vertical"
     android:background="@drawable/main_background"
-    />
+    >
+    <ScrollView
+        android:id="@+id/product_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        />
+    <com.etsy.android.grid.StaggeredGridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:item_margin="@dimen/item_margin"
+        app:column_count_portrait="@integer/column_count_portrait"
+        app:column_count_landscape="@integer/column_count_landscape"
+        app:grid_paddingLeft="@dimen/grid_left_padding"
+        app:grid_paddingRight="@dimen/grid_right_padding"
+        app:grid_paddingTop="@dimen/default_padding"
+        app:grid_paddingBottom="@dimen/default_padding"
+        android:layout_alignParentTop="true"
+        />
+
+</RelativeLayout>

@@ -12,6 +12,5 @@ public class FetchStateFetching extends FetchState {
 
     @Override
     public void fetch(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        //fuck you I"m busy
     }
 }

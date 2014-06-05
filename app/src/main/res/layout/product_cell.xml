@@ -33,34 +33,6 @@
 
     </FrameLayout>
     <!--<FrameLayout
-        android:id="@+id/add_to_cart_banner_button"
-        style="@style/banner_holder.top"
-        android:layout_alignTop="@id/product_image_container"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/banner_edge_spacing"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_to_cart_05"
-            />
-    </FrameLayout>-->
-
-    <!--<FrameLayout
-        android:id="@+id/like_banner_button"
-        style="@style/banner_holder.top"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/product_image_container"
-        android:layout_marginRight="@dimen/banner_edge_spacing"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_to_cart_05"
-            />
-    </FrameLayout>-->
-
-    <!--<FrameLayout
         android:id="@+id/price_container"
         style="@style/banner_holder.bottom"
         android:layout_alignParentRight="true"

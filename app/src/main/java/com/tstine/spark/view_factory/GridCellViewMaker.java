@@ -1,42 +1,48 @@
-package com.tstine.spark.util;
+package com.tstine.spark.view_factory;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.tstine.spark.R;
-import com.tstine.spark.mixin.ScrollStateObserver;
-import com.tstine.spark.mixin.ScrollStateSubject;
 import com.tstine.spark.model.Product;
+import com.tstine.spark.util.Logger;
+import com.tstine.spark.view_factory.ViewHolder;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+
+import java.util.Objects;
 
 /**
  * Created by taylorstine on 5/30/14.
  */
 @EBean
-public class GridCellViewFactory{
+public class GridCellViewMaker implements ViewMaker{
     @RootContext Context mContext;
 
-    public View makeView(Product product, View convertView, ViewGroup parent){
+    public View makeView(Object item, View convertView, ViewGroup parent){
+        Product product;
+        try{
+            product = (Product)item;
+        }catch (ClassCastException e){
+            throw new ClassCastException("Grid cell view factory expected a Product object, but instead" +
+                "got a " + item.getClass() + " object");
+        }
+
         if (convertView == null){
             LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.product_cell, parent, false);
+        }
+
+        if (convertView.getTag() == null){
             convertView.setTag(new ViewHolder(convertView));
         }
         ViewHolder holder = (ViewHolder)convertView.getTag();

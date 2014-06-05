@@ -8,7 +8,7 @@ import org.androidannotations.annotations.EBean;
  * Created by taylorstine on 5/29/14.
  */
 @EBean(scope = EBean.Scope.Singleton)
-public class GsonFactory{
+public class GsonOverlord {
     private Gson mGson;
 
     protected Gson buildGson(){
@@ -18,7 +18,7 @@ public class GsonFactory{
         return mGson;
     }
 
-    public Gson getGson(){
+    public Gson humblyRequestGson(){
         return buildGson();
     }
 }

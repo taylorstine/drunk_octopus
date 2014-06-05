@@ -2,8 +2,36 @@
 <resources>
 
     <string name="app_name">Spark</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="base_api_url">http://localhost:3000</string>
-
+    <string name="base_api_url">http://localhost:5000</string>
+    <string-array name="entries">
+        <item>hey</item>
+        <item>hi</item>
+        <item>yo</item>
+        <item>heyyy</item>
+        <item>hey</item>
+        <item>hi</item>
+        <item>yo</item>
+        <item>heyyy</item>
+        <item>hey</item>
+        <item>hi</item>
+        <item>yo</item>
+        <item>heyyy</item>
+        <item>hey</item>
+        <item>hi</item>
+        <item>yo</item>
+        <item>heyyy</item>
+        <item>hey</item>
+        <item>hi</item>
+        <item>yo</item>
+        <item>heyyy</item>
+        <item>hey</item>
+        <item>hi</item>
+        <item>yo</item>
+        <item>heyyy</item>
+        <item>hey</item>
+        <item>hi</item>
+        <item>yo</item>
+        <item>heyyy</item>
+    </string-array>
 </resources>

@@ -19,12 +19,12 @@ public class RestAdapterFactory {
 
     @RootContext Context mContext;
     @Bean
-    GsonFactory mGsonFactory;
+    GsonOverlord mGsonFactory;
 
     public RestAdapter makeRestAdapter(){
         return new RestAdapter.Builder()
                 .setEndpoint(mContext.getString(R.string.base_api_url))
-                .setConverter(new GsonConverter(mGsonFactory.getGson()))
+                .setConverter(new GsonConverter(mGsonFactory.humblyRequestGson()))
                 .build();
     }
 }
