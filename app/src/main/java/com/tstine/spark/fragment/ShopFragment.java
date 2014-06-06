@@ -76,7 +76,7 @@ public class ShopFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (mAdapter != null) {
-            mAdapter.setHasHeader(false);
+            mAdapter.setHasPaddingViewsAtTop(false);
             mAdapter.notifyDataSetInvalidated();
         }
     }
@@ -111,7 +111,7 @@ public class ShopFragment extends BaseFragment {
                 view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height*4));
                 product_container_parent.addView(view);
 
-                mAdapter.setHasHeader(true);
+                mAdapter.setHasPaddingViewsAtTop(true);
                 mAdapter.setPaddingViewHeight(height);
                 mAdapter.notifyDataSetInvalidated();
             }

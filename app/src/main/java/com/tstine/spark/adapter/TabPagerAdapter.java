@@ -16,18 +16,32 @@ import org.androidannotations.annotations.EBean;
 
 
 /**
- * Created by taylorstine on 6/6/14.
+ * An adapter for the main view pager.  Returns a fragment depending on the position
+ * of view pager
+ * @see #getItem(int)
  */
-public class TabAdapter extends FragmentPagerAdapter{
+public class TabPagerAdapter extends FragmentPagerAdapter{
 
     private static final String[] TITLE = {"Search", "Shop", "Cart", "You"};
     private FragmentManager mFragmentManager;
     private ViewGroup mContainer;
 
-    public TabAdapter(FragmentManager fm){
+    public TabPagerAdapter(FragmentManager fm){
         super(fm);
     }
 
+    /**
+     * Depending on the position value passed in returns one of the following:
+     * <ul>
+     *     <li>0: {@link com.tstine.spark.fragment.SearchFragment}</li>
+     *     <li>1: {@link com.tstine.spark.fragment.ShopFragment}</li>
+     *     <li>2: {@link com.tstine.spark.fragment.CartFragment}</li>
+     *     <li>3: {@link com.tstine.spark.fragment.AccountFragment}</li>
+     *     <li>default: {@link com.tstine.spark.fragment.ShopFragment}</li>
+     * </ul>
+     * @param position
+     * @return
+     */
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
         switch(position) {
@@ -50,6 +64,12 @@ public class TabAdapter extends FragmentPagerAdapter{
     }
 
 
+    /**
+     * Saves a reference to the container for the fragments, held by {@link #mContainer}
+     * @param container
+     * @param position
+     * @return
+     */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         this.mContainer = container;

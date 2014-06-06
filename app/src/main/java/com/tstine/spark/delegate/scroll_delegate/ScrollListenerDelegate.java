@@ -11,7 +11,10 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 /**
- * Created by taylorstine on 6/1/14.
+ * Extends {@link com.tstine.spark.delegate.scroll_delegate.ScrollListenerDecorator} to
+ * fetch data when the scroll state changes.  Delegates fetching to a {@link com.tstine.spark.fetchstate.FetchState}
+ * object, which updates the internal state of this class based on if the data needs fetching
+ * @see com.tstine.spark.mixin.StateMaintainer
  */
 @EBean(scope = EBean.Scope.Singleton)
 public class ScrollListenerDelegate extends  ScrollListenerDecorator implements StateMaintainer{

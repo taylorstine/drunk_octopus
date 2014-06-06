@@ -8,6 +8,7 @@ import com.tstine.spark.R;
 import com.tstine.spark.activity.ProductActivity_;
 import com.tstine.spark.model.Product;
 import com.tstine.spark.rest.GsonOverlord;
+import com.tstine.spark.util.ViewAnimator;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -24,12 +25,17 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 /**
- * Created by taylorstine on 6/1/14.
+ * Handles the click events for the app.
  */
 @EBean
 public class ViewClickDelegate implements AdapterView.OnItemClickListener{
     @RootContext FragmentActivity mActivity;
     @Bean GsonOverlord mGsonOverlord;
+
+    /**
+     * Handles the animation of the views
+     */
+    @Bean ViewAnimator mAnimator;
     private Handler mHandler;
     private boolean mNoClickState;
 
@@ -37,6 +43,7 @@ public class ViewClickDelegate implements AdapterView.OnItemClickListener{
         mHandler = new Handler();
         mNoClickState = true;
     }
+
     public void doItemClick(Product product){
 
     }
@@ -45,18 +52,38 @@ public class ViewClickDelegate implements AdapterView.OnItemClickListener{
 
     }
 
+    /**
+     * Occurs when a product in the product grid view is clicked. Launches a new page to show  the
+     * information for that product
+     * @param product
+     * @param parent
+     * @param viewClicked
+     * @param position
+     * @param id
+     */
     public void doProductInformationClick(Product product, AdapterView<?> parent, View viewClicked, int position, long id){
         String productData = mGsonOverlord.humblyRequestGson().toJson(product, Product.class);
         ProductActivity_.intent(mActivity).productData(productData).start();
     }
 
-    public void doProductLike(final View view, final Product product){
-        doSpringAnimation(view);
-        doHeartAnimation(view);
+    /**
+     * Performs the actions for a like click on a product.  Delegates the animation to the
+     * {@link com.tstine.spark.util.ViewAnimator object passed in}
+     * @param view the view that was click
+     * @param product the data for the view
+     */
+    public void doProductLikeClick(final View view, final Product product){
+        mAnimator.doSpringAnimation(view);
+        mAnimator.doHeartAnimation(view);
         doIncrementLikeCount(view, product);
    }
 
-    public void doIncrementLikeCount(View view, Product product){
+    /**
+     * Increments the like count for a particular product
+     * @param view
+     * @param product
+     */
+    private void doIncrementLikeCount(View view, Product product){
         product.setLike_count(product.getLike_count() + 1);
         TextView likeCountView = (TextView)view.findViewById(R.id.like_count_text);
         if (likeCountView != null){
@@ -64,47 +91,16 @@ public class ViewClickDelegate implements AdapterView.OnItemClickListener{
         }
     }
 
-    public void doHeartAnimation(final View view){
-        final View heart = view.findViewById(R.id.like_notification);
-        if (heart != null) {
-            final ValueAnimator fadeInAnimation = ObjectAnimator.ofFloat(heart, "alpha", 0.0f, 1.0f);
-            final ValueAnimator fadeOutAnimation = ObjectAnimator.ofFloat(heart, "alpha", 1.0f, 0.0f);
-            fadeInAnimation.setInterpolator(new DecelerateInterpolator());
-            fadeInAnimation.setDuration(200);
-            fadeOutAnimation.setInterpolator(new DecelerateInterpolator());
-            fadeOutAnimation.setDuration(200);
-            fadeOutAnimation.setStartDelay(500);
 
-            AnimatorSet set = new AnimatorSet();
-            set.play(fadeInAnimation).before(fadeOutAnimation);
-            set.start();
-        }
-
-    }
-    public void doSpringAnimation(final View view){
-        SpringSystem springSystem = SpringSystem.create();
-        Spring spring = springSystem.createSpring();
-        spring.addListener(new SimpleSpringListener(){
-            @Override
-            public void onSpringUpdate(Spring spring) {
-                float high = 1f, low = 0.80f;
-                float mid = (high+low) /2.0f;
-
-                float mappedValue = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, high, low);
-
-                if (mappedValue < mid){
-                    mappedValue = high - mappedValue + low;
-                }
-                view.setScaleX(mappedValue);
-                view.setScaleY(mappedValue);
-            }
-
-
-        });
-        spring.setEndValue(1);
-
-    }
-
+    /**
+     * Called when an item in the product grid view is clicked.  Times the click so that in the
+     * event of a double click, the product is liked, but in the event of a single click, detailed
+     * information is shown about the product.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
         final Product product = ((Product) parent.getAdapter().getItem(position));
@@ -123,12 +119,16 @@ public class ViewClickDelegate implements AdapterView.OnItemClickListener{
 
         }else{
             mHandler.removeCallbacksAndMessages(null);
-            doProductLike(view, product);
+            doProductLikeClick(view, product);
             mNoClickState = true;
         }
 
     }
 
+    /**
+     * Sets a reference to the activity this class is used in.
+     * @param mActivity
+     */
     public void setActivity(FragmentActivity mActivity) {
         this.mActivity = mActivity;
     }

@@ -5,7 +5,7 @@ import android.graphics.Color;
 import com.andraskindler.parallaxviewpager.ParallaxViewPager;
 import com.astuetz.PagerSlidingTabStrip;
 import com.tstine.spark.R;
-import com.tstine.spark.adapter.TabAdapter;
+import com.tstine.spark.adapter.TabPagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -14,7 +14,7 @@ import org.androidannotations.annotations.ViewById;
 /**
  * This is the main activity for the app.  This activity consists of a tab bar
  *  {@link com.astuetz.PagerSlidingTabStrip} and a {@link android.support.v4.view.ViewPager}
- *  @see com.tstine.spark.adapter.TabAdapter
+ *  @see com.tstine.spark.adapter.TabPagerAdapter
  */
 @EActivity(R.layout.pager_layout)
 public class MainActivity extends BaseActivity {
@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
     @AfterViews
     public void afterViewInject(){
 
-        pager.setAdapter(new TabAdapter(getSupportFragmentManager()));
+        pager.setAdapter(new TabPagerAdapter(getSupportFragmentManager()));
         pager.setCurrentItem(1);
 
         tabs.setViewPager(pager);

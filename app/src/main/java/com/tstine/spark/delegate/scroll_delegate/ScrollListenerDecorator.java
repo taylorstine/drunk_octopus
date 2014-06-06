@@ -5,12 +5,23 @@ import android.widget.AbsListView;
 import org.androidannotations.annotations.EBean;
 
 /**
- * Created by taylorstine on 6/5/14.
+ * Class the provides decoration to a scroll listener.  This allows multiple scroll listeners
+ * to be attached by calling {@link #decorate(android.widget.AbsListView.OnScrollListener)} on
+ * an instance of this class
  */
 @EBean
 public class ScrollListenerDecorator implements AbsListView.OnScrollListener{
 
+    /**
+     * The next object in the chain that the requests are forwarded to
+     */
     private AbsListView.OnScrollListener mDecoratee;
+
+    /**
+     * Adds an object to forward scroll data to
+     * @param decoratee
+     * @return
+     */
     public ScrollListenerDecorator decorate(AbsListView.OnScrollListener decoratee){
         this.mDecoratee = decoratee;
         return this;
