@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.tstine.spark.R;
+import com.tstine.spark.mixin.OnViewSizeReadyObserver;
 import com.tstine.spark.model.Product;
 import com.tstine.spark.util.Logger;
 import com.tstine.spark.view_factory.ViewHolder;
@@ -28,6 +29,13 @@ import java.util.Objects;
 public class GridCellViewMaker implements ViewMaker{
     @RootContext Context mContext;
 
+    OnViewSizeReadyObserver mObserver;
+
+    @Override
+    public void registerOnViewSizeChangeObserver(OnViewSizeReadyObserver observer) {
+        mObserver = observer;
+    }
+
     public View makeView(Object item, View convertView, ViewGroup parent){
         Product product;
         try{
@@ -37,7 +45,7 @@ public class GridCellViewMaker implements ViewMaker{
                 "got a " + item.getClass() + " object");
         }
 
-        if (convertView == null){
+        if (convertView == null || (convertView.getTag() != null &&convertView.getTag().toString().equalsIgnoreCase("padding view"))){
             LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.product_cell, parent, false);
         }
@@ -45,6 +53,7 @@ public class GridCellViewMaker implements ViewMaker{
         if (convertView.getTag() == null){
             convertView.setTag(new ViewHolder(convertView));
         }
+
         ViewHolder holder = (ViewHolder)convertView.getTag();
         handleProductImage(holder, product, convertView);
         handleProductTitle(holder, product);
@@ -74,18 +83,40 @@ public class GridCellViewMaker implements ViewMaker{
             width = product.getImage().getSize().getWidth();
             height = product.getImage().getSize().getHeight();
         }catch(NullPointerException e){
-            width = (int)(Math.random() * 400 + 150);
-            height = (int)(Math.random() * 400 + 150);
+            width = (int)(Math.random() * 200 + 150);
+            height = (int)(Math.random() * 200 + 150);
         }
+
         final float imageAspect = (float)height/(float)width;
-        parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                parent.getViewTreeObserver().removeOnPreDrawListener(this);
-                setImageViewSize(imageView, parent, imageAspect);
-                return false;
-            }
-        });
+
+        if (parent != null && parent.getViewTreeObserver() != null) {
+            parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    if (parent.getViewTreeObserver().isAlive()) {
+                        parent.getViewTreeObserver().removeOnPreDrawListener(this);
+                    }
+                    setImageViewSize(imageView, parent, imageAspect);
+                    if (mObserver != null) {
+                        if (parent.getViewTreeObserver().isAlive()){
+                            parent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                                @Override
+                                public boolean onPreDraw() {
+                                    if (parent.getViewTreeObserver().isAlive()){
+                                        parent.getViewTreeObserver().removeOnPreDrawListener(this);
+                                    }
+                                    mObserver.notifyViewSizeReady(parent.getWidth(), parent.getHeight());
+                                    return false;
+                                }
+                            });
+                        }
+
+                    }
+                    return false;
+                }
+            });
+        }
+
         Picasso.with(mContext)
             .load(product.getImage().getUrl())
             .placeholder(placeHolder)

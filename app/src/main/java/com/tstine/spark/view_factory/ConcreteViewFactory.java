@@ -27,18 +27,22 @@ public class ConcreteViewFactory extends AbstractViewFactory {
         return getProductViewMaker().makeView(product, null, parent);
     }
 
+    @Override
     public ViewMaker getProductViewMaker() {
         return mProductViewMaker;
     }
 
+    @Override
     public void setProductViewMaker(ViewMaker mProductViewMaker) {
         this.mProductViewMaker = mProductViewMaker;
     }
 
+    @Override
     public ViewMaker getGridCellViewMaker() {
         return mGridCellViewMaker;
     }
 
+    @Override
     public void setGridCellViewMaker(ViewMaker mGridCellViewMaker) {
         this.mGridCellViewMaker = mGridCellViewMaker;
     }

@@ -1,22 +1,19 @@
 package com.tstine.spark.activity;
 
 import android.app.Activity;
-import android.database.DataSetObserver;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
-import android.widget.RelativeLayout;
 
-import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 import com.tstine.spark.R;
+import com.tstine.spark.mixin.OnViewSizeReadyObserver;
 import com.tstine.spark.model.Product;
 import com.tstine.spark.rest.GsonOverlord;
+import com.tstine.spark.touch_listener.ForwardingTouchListener;
+import com.tstine.spark.touch_listener.NullTouchListener;
 import com.tstine.spark.util.GridAdapter;
-import com.tstine.spark.util.Logger;
 import com.tstine.spark.view_factory.AbstractViewFactory;
 import com.tstine.spark.view_factory.ConcreteViewFactory;
 import com.tstine.spark.util.ScrollListenerDelegate;
@@ -39,13 +36,16 @@ public class HomeActivity extends Activity {
     @Bean ViewClickDelegate mClickDelegate;
     @Bean ScrollListenerDelegate mScrollListenerDelegate;
     @Bean GridAdapter mAdapter;
-    @Bean(ConcreteViewFactory.class)AbstractViewFactory mViewFactory;
+    @Bean(ConcreteViewFactory.class) AbstractViewFactory mViewFactory;
     @Bean GsonOverlord mGsonOverlord;
 
     @Extra String productData = null;
 
     @ViewById AbsListView grid_view;
     @ViewById ViewGroup product_container;
+    @ViewById ViewGroup product_container_parent;
+    @ViewById ViewGroup product_scroll_view;
+    @ViewById ViewGroup container;
 
     @Trace
     @AfterViews
@@ -59,14 +59,9 @@ public class HomeActivity extends Activity {
     void configureGridView(){
         mAdapter.setViewFactory(mViewFactory);
         grid_view.setAdapter(mAdapter);
+        mScrollListenerDelegate.setActivity(this);
         grid_view.setOnScrollListener(mScrollListenerDelegate);
-        grid_view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                product_container.onTouchEvent(event);
-                return false;
-            }
-        });
+        grid_view.setOnTouchListener(new ForwardingTouchListener(product_scroll_view));
         grid_view.setOnItemClickListener(mClickDelegate);
     }
 
@@ -77,17 +72,17 @@ public class HomeActivity extends Activity {
         if (child.getParent() == null){
             product_container.addView(child);
         }
-        product_container.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        final Context context = this;
+        mViewFactory.getProductViewMaker().registerOnViewSizeChangeObserver(new OnViewSizeReadyObserver() {
             @Override
-            public boolean onPreDraw() {
-                if (product_container != null &&
-                    product_container.getViewTreeObserver().isAlive()){
-                    product_container.getViewTreeObserver().removeOnPreDrawListener(this);
-                }
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(product_container.getLayoutParams());
-                params.height*=2;
-                product_container.setLayoutParams(params);
-                return false;
+            public void notifyViewSizeReady(int width, int height) {
+                View view = new View(context);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height*2));
+                product_container_parent.addView(view);
+
+                mAdapter.setHasHeader(true);
+                mAdapter.setPaddingViewHeight(height);
+                mAdapter.notifyDataSetInvalidated();
             }
         });
 
@@ -98,5 +93,14 @@ public class HomeActivity extends Activity {
         mClickDelegate.doItemLongClick(product);
     }
 
+    private float dpFromPx(float px)
+    {
+        return px / getResources().getDisplayMetrics().density;
+    }
+
+    private float pxFromDp(float dp)
+    {
+        return dp * getResources().getDisplayMetrics().density;
+    }
 }
 

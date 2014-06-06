@@ -25,6 +25,9 @@ import java.util.List;
 public class GridAdapter extends BaseAdapter{
 
     @Bean(NullViewFactory.class) AbstractViewFactory  mViewFactory;
+    private boolean mHasHeader = false;
+    private int mPaddingViewHeight = 0;
+
     protected List<Product> mProducts;
 
     public GridAdapter(){
@@ -37,13 +40,39 @@ public class GridAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return mProducts.size();
+        if (hasHeader()) {
+            return mProducts.size() + 2;
+        }else{
+            return mProducts.size();
+        }
     }
 
     @Override
     public Product getItem(int position) {
-        return mProducts.get(position);
+        Logger.log("position: " + position);
+        if (hasHeader()) {
+            if (position >= 2) {
+                return mProducts.get(position - 2);
+            }else{
+                return mProducts.get(position);
+            }
+        }else{
+            return mProducts.get(position);
+        }
     }
+
+    public boolean hasHeader(){return mHasHeader;}
+
+    public boolean shouldMakeHeader(int position){
+        return hasHeader() && position < 2;
+    }
+
+    public void setHasHeader(boolean value){
+        this.mHasHeader = value;
+    }
+
+    public void setPaddingViewHeight(int height){this.mPaddingViewHeight = height;}
+    public int getPaddingViewHeight(){return this.mPaddingViewHeight;}
 
     public void addHeader(Product product){
         mProducts.add(0, product);
@@ -52,7 +81,7 @@ public class GridAdapter extends BaseAdapter{
 
     @Override
     public long getItemId(int position) {
-        if (getItem(position).get_id() != null){
+        if (getItem(position) != null && getItem(position).get_id() != null){
             return (getItem(position)).get_id().hashCode();
         }
         return 0;
@@ -60,7 +89,12 @@ public class GridAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return getViewFactory().makeProductGridCellView(getItem(position), convertView, parent);
+        if (shouldMakeHeader(position)){
+            return getViewFactory().makePaddingView(getPaddingViewHeight());
+        }else{
+            return getViewFactory().makeProductGridCellView(getItem(position), convertView, parent);
+        }
+
     }
 
     public AbstractViewFactory getViewFactory() {

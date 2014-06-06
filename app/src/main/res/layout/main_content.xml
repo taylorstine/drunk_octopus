@@ -2,19 +2,33 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/main_background"
     >
+
     <ScrollView
-        android:id="@+id/product_container"
+        android:id="@+id/product_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/product_container_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <FrameLayout
+                android:id="@+id/product_container"
+                android:padding="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+    </ScrollView>
+
     <com.etsy.android.grid.StaggeredGridView
         android:id="@+id/grid_view"
         android:layout_width="match_parent"

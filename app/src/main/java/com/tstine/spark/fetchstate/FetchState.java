@@ -1,5 +1,6 @@
 package com.tstine.spark.fetchstate;
 
+import android.app.Activity;
 import android.widget.AbsListView;
 
 import com.tstine.spark.mixin.ScrollStateObserver;
@@ -16,10 +17,9 @@ import org.androidannotations.annotations.EBean;
 @EBean
 public abstract class FetchState {
 
-    @Bean
-    Fetcher mFetcher;
-    @Bean
-    GridAdapter mGridAdapter;
+    @Bean Fetcher mFetcher;
+    @Bean GridAdapter mGridAdapter;
+    Activity mActivity;
     protected StateMaintainer mStateMaintainer;
 
     public abstract void fetch(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount);
@@ -30,5 +30,9 @@ public abstract class FetchState {
 
     public void setStateMaintainer(StateMaintainer mStateMaintainer) {
         this.mStateMaintainer = mStateMaintainer;
+    }
+
+    public void setActivity(Activity activity){
+        this.mActivity = activity;
     }
 }

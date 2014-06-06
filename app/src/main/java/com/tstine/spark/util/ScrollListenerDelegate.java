@@ -1,5 +1,6 @@
 package com.tstine.spark.util;
 
+import android.app.Activity;
 import android.widget.AbsListView;
 
 import com.tstine.spark.mixin.ScrollStateSubject;
@@ -10,6 +11,7 @@ import com.tstine.spark.fetchstate.FetchStateWaiting;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,10 @@ public class ScrollListenerDelegate extends  ScrollListenerDecorator implements 
     @AfterInject
     protected void afterInejct(){
         mState.setStateMaintainer(this);
+    }
+
+    public void setActivity(Activity activity){
+        mState.setActivity(activity);
     }
 
     @Override
