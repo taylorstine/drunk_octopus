@@ -5,10 +5,12 @@ import android.widget.AbsListView;
 
 import com.tstine.spark.R;
 import com.tstine.spark.model.Product;
+import com.tstine.spark.util.ErrorHandler;
 import com.tstine.spark.util.FetchError;
 import com.tstine.spark.util.Logger;
 import com.tstine.spark.rest.Fetcher;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.Trace;
@@ -32,16 +34,18 @@ public class FetchStateWaiting extends FetchState {
             mFetcher.fetchProducts(new Fetcher.IFetchedIt() {
                 @Override
                 public void onFetch(List<Product> products) {
+                    mStateMaintainer.setState(state);
+                    if (products == null || products.isEmpty()){
+                        onError(null);
+                    }
                     mGridAdapter.appendItems(products);
                     mGridAdapter.notifyDataSetChanged();
-                    mStateMaintainer.setState(state);
                 }
 
                 @Override
                 public void onError(FetchError error) {
                     mStateMaintainer.setState(state);
-                    Crouton.make(mActivity, mActivity.getLayoutInflater().inflate(R.layout.crouton_error, null)).show();
-                    Logger.log("Got fetchProducts error: " + error.getReason());
+                    getErrorHandler().handleFetchProductError(error);
                 }
             });
         }

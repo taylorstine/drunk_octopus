@@ -2,23 +2,32 @@ package com.tstine.spark.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 
+import com.facebook.rebound.SimpleSpringListener;
+import com.facebook.rebound.Spring;
+import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringSystem;
+import com.facebook.rebound.SpringUtil;
 import com.tstine.spark.R;
 import com.tstine.spark.mixin.OnViewSizeReadyObserver;
 import com.tstine.spark.model.Product;
 import com.tstine.spark.rest.GsonOverlord;
 import com.tstine.spark.touch_listener.ForwardingTouchListener;
 import com.tstine.spark.touch_listener.NullTouchListener;
+import com.tstine.spark.util.ErrorHandler;
 import com.tstine.spark.util.GridAdapter;
 import com.tstine.spark.view_factory.AbstractViewFactory;
 import com.tstine.spark.view_factory.ConcreteViewFactory;
 import com.tstine.spark.util.ScrollListenerDelegate;
 import com.tstine.spark.util.ViewClickDelegate;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -38,6 +47,7 @@ public class HomeActivity extends Activity {
     @Bean GridAdapter mAdapter;
     @Bean(ConcreteViewFactory.class) AbstractViewFactory mViewFactory;
     @Bean GsonOverlord mGsonOverlord;
+    @Bean ErrorHandler mErrorHandler;
 
     @Extra String productData = null;
 
@@ -46,6 +56,12 @@ public class HomeActivity extends Activity {
     @ViewById ViewGroup product_container_parent;
     @ViewById ViewGroup product_scroll_view;
     @ViewById ViewGroup container;
+    @ViewById ImageView loader;
+
+    @AfterInject
+    protected void afterInject(){
+        mErrorHandler.setActivity(this);
+    }
 
     @Trace
     @AfterViews
@@ -54,12 +70,13 @@ public class HomeActivity extends Activity {
         if (productData != null) {
             configureProductView();
         }
+        loader.setBackgroundResource(R.drawable.oreo_loader);
+        ((AnimationDrawable) loader.getBackground()).start();
     }
 
     void configureGridView(){
         mAdapter.setViewFactory(mViewFactory);
         grid_view.setAdapter(mAdapter);
-        mScrollListenerDelegate.setActivity(this);
         grid_view.setOnScrollListener(mScrollListenerDelegate);
         grid_view.setOnTouchListener(new ForwardingTouchListener(product_scroll_view));
         grid_view.setOnItemClickListener(mClickDelegate);
@@ -77,7 +94,7 @@ public class HomeActivity extends Activity {
             @Override
             public void notifyViewSizeReady(int width, int height) {
                 View view = new View(context);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height*2));
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height*4));
                 product_container_parent.addView(view);
 
                 mAdapter.setHasHeader(true);

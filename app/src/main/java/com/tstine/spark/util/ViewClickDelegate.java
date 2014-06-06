@@ -87,23 +87,27 @@ public class ViewClickDelegate implements AdapterView.OnItemClickListener{
 
     public void doIncrementLikeCount(View view, Product product){
         product.setLike_count(product.getLike_count() + 1);
-        ((TextView)view.findViewById(R.id.like_count_text)).setText(String.valueOf(product.getLike_count()));
+        TextView likeCountView = (TextView)view.findViewById(R.id.like_count_text);
+        if (likeCountView != null){
+            likeCountView.setText(String.valueOf(product.getLike_count()));
+        }
     }
 
     public void doHeartAnimation(final View view){
         final View heart = view.findViewById(R.id.like_notification);
+        if (heart != null) {
+            final ValueAnimator fadeInAnimation = ObjectAnimator.ofFloat(heart, "alpha", 0.0f, 1.0f);
+            final ValueAnimator fadeOutAnimation = ObjectAnimator.ofFloat(heart, "alpha", 1.0f, 0.0f);
+            fadeInAnimation.setInterpolator(new DecelerateInterpolator());
+            fadeInAnimation.setDuration(200);
+            fadeOutAnimation.setInterpolator(new DecelerateInterpolator());
+            fadeOutAnimation.setDuration(200);
+            fadeOutAnimation.setStartDelay(500);
 
-        final ValueAnimator fadeInAnimation = ObjectAnimator.ofFloat(heart, "alpha", 0.0f, 1.0f);
-        final ValueAnimator fadeOutAnimation = ObjectAnimator.ofFloat(heart, "alpha", 1.0f, 0.0f);
-        fadeInAnimation.setInterpolator(new DecelerateInterpolator());
-        fadeInAnimation.setDuration(200);
-        fadeOutAnimation.setInterpolator(new DecelerateInterpolator());
-        fadeOutAnimation.setDuration(200);
-        fadeOutAnimation.setStartDelay(500);
-
-        AnimatorSet set = new AnimatorSet();
-        set.play(fadeInAnimation).before(fadeOutAnimation);
-        set.start();
+            AnimatorSet set = new AnimatorSet();
+            set.play(fadeInAnimation).before(fadeOutAnimation);
+            set.start();
+        }
 
     }
     public void doSpringAnimation(final View view){

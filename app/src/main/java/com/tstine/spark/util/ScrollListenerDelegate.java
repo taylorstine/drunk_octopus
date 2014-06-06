@@ -29,10 +29,6 @@ public class ScrollListenerDelegate extends  ScrollListenerDecorator implements 
         mState.setStateMaintainer(this);
     }
 
-    public void setActivity(Activity activity){
-        mState.setActivity(activity);
-    }
-
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         super.onScrollStateChanged(view, scrollState);

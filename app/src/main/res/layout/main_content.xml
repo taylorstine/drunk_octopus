@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/main_background"
+    android:background="@color/main_background"
     >
 
     <ScrollView
@@ -41,6 +41,12 @@
         app:grid_paddingTop="@dimen/default_padding"
         app:grid_paddingBottom="@dimen/default_padding"
         android:layout_alignParentTop="true"
+        />
+    <ImageView
+        android:id="@+id/loader"
+        android:layout_width="@dimen/loader_width"
+        android:layout_height="@dimen/loader_height"
+        android:layout_centerHorizontal="true"
         />
 
 </RelativeLayout>
