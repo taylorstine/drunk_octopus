@@ -5,4 +5,36 @@
     <string name="action_settings">Settings</string>
     <string name="base_api_url">http://localhost:5000</string>
     <string name="fetch_product_error">Something wrong!\nWe got an error when trying to get your products.</string>
+    <string name="search_hint">I\'m looking for...</string>
+    <string name="cart_empty_notification">Your cart is empty, go find some great stuff!</string>
+    <string name="stats_title">Your stats:</string>
+
+    <string-array name="search_categories">
+        <item>Watches</item>
+        <item>Shoes</item>
+        <item>Tops</item>
+        <item>Bottoms</item>
+        <item>Jeans</item>
+        <item>Sport Coats</item>
+        <item>Sweat Shirts</item>
+        <item>Cars</item>
+        <item>Ties</item>
+        <item>Dress Shirts</item>
+        <item>Tank Tops</item>
+        <item>Belts</item>
+        <item>Accessories</item>
+        <item>Hats</item>
+        <item>Overcoats</item>
+    </string-array>
+
+    <string-array name="example_stats">
+        <item>Rewards Points Earned: 5000</item>
+        <item>Money Saved: $300</item>
+        <item>Time Browsing: 3h 12m</item>
+        <item>Favorite Category: Watches</item>
+        <item>Favorite Item: Rolex</item>
+        <item>Purchases Made: 30</item>
+        <item>Favorite Color: Green</item>
+        <item>Favorite Brand: Levis</item>
+    </string-array>
 </resources>

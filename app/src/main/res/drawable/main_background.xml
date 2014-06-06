@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-        android:src="@drawable/denium_pattern_four"
-        android:tileMode="repeat"
+        android:src="@drawable/purple_image"
+        android:gravity="clip_horizontal|clip_vertical"
     >
 
 </bitmap>

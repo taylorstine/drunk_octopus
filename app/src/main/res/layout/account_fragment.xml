@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/fragment_layout_padding"
+                android:background="@color/theme_background"
+    >
+
+    <ImageView
+        android:id="@+id/account_image"
+        android:layout_width="@dimen/account_image_width"
+        android:layout_height="@dimen/account_image_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/purple_android"
+        />
+
+    <TextView
+        android:id="@+id/user_name"
+        style="@style/spark_text.title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding"
+        android:text="ilovemobile_1234"
+        android:layout_toRightOf="@id/account_image"
+        android:layout_alignParentTop="true"
+        />
+    <TextView
+        android:id="@+id/stats_title"
+        style="@style/spark_text.title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account_image"
+        android:layout_alignParentLeft="true"
+        android:text="@string/stats_title"
+        android:gravity="center"
+        />
+    <ListView
+        android:id="@+id/stats_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/stats_title"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

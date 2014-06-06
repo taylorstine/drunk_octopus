@@ -48,7 +48,9 @@ dependencies {
         // exclusion is not neccessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'
     }
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar:3.1.2'
+    compile 'com.andraskindler.parallaxviewpager:parallaxviewpager:0.3.1'
     //compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     //compile 'org.springframework.android:spring-android-auth:1.0.1.RELEASE'
     //compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'

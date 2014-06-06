@@ -26,6 +26,12 @@
         <item name="android:textColor">@color/text_color</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+    <style name="spark_text.list_item">
+        <item name="android:textSize">@dimen/list_text_size</item>
+    </style>
+    <style name="spark_text.title">
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
     <style name="spark_text.small_title">
         <item name="android:textSize">@dimen/small_title_text_size</item>
     </style>

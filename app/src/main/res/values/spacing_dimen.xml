@@ -12,4 +12,6 @@
     <dimen name="banner_edge_spacing">8dp</dimen>
     <dimen name="text_view_spacing">2dp</dimen>
 
+    <dimen name="tab_padding">32dp</dimen>
+
 </resources>

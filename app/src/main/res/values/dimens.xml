@@ -6,7 +6,13 @@
     <dimen name="user_rectangle_corner_radius">6dp</dimen>
     <dimen name="grid_left_padding">2dp</dimen>
     <dimen name="grid_right_padding">2dp</dimen>
-    <dimen name="loader_width">48dp</dimen>
-    <dimen name="loader_height">48dp</dimen>
+    <dimen name="loader_width">60dp</dimen>
+    <dimen name="loader_height">60dp</dimen>
+    <dimen name="tab_bar_height">48dp</dimen>
+    <dimen name="fragment_layout_padding">16dp</dimen>
+    <dimen name="list_item_margin_top">18dp</dimen>
+    <dimen name="list_item_margin_bottom">18dp</dimen>
+    <dimen name="account_image_width">72dp</dimen>
+    <dimen name="account_image_height">72dp</dimen>
 
 </resources>

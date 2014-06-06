@@ -2,24 +2,19 @@ package com.tstine.spark.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.drawable.AnimationDrawable;
-import android.view.MotionEvent;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 
-import com.facebook.rebound.SimpleSpringListener;
-import com.facebook.rebound.Spring;
-import com.facebook.rebound.SpringConfig;
-import com.facebook.rebound.SpringSystem;
-import com.facebook.rebound.SpringUtil;
 import com.tstine.spark.R;
 import com.tstine.spark.mixin.OnViewSizeReadyObserver;
 import com.tstine.spark.model.Product;
 import com.tstine.spark.rest.GsonOverlord;
 import com.tstine.spark.touch_listener.ForwardingTouchListener;
-import com.tstine.spark.touch_listener.NullTouchListener;
 import com.tstine.spark.util.ErrorHandler;
 import com.tstine.spark.util.GridAdapter;
 import com.tstine.spark.view_factory.AbstractViewFactory;
@@ -39,8 +34,8 @@ import org.androidannotations.annotations.ViewById;
 /**
  * Created by taylorstine on 5/29/14.
  */
-@EActivity(R.layout.main_content)
-public class HomeActivity extends Activity {
+@EActivity(R.layout.products_main)
+public class ProductActivity extends FragmentActivity {
 
     @Bean ViewClickDelegate mClickDelegate;
     @Bean ScrollListenerDelegate mScrollListenerDelegate;
@@ -61,6 +56,7 @@ public class HomeActivity extends Activity {
     @AfterInject
     protected void afterInject(){
         mErrorHandler.setActivity(this);
+        mClickDelegate.setActivity(this);
     }
 
     @Trace
@@ -72,6 +68,7 @@ public class HomeActivity extends Activity {
         }
         loader.setBackgroundResource(R.drawable.oreo_loader);
         ((AnimationDrawable) loader.getBackground()).start();
+        loader.setVisibility(View.GONE);
     }
 
     void configureGridView(){

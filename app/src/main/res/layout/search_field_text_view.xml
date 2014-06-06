@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          style="@style/spark_text.list_item"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:paddingTop="@dimen/list_item_margin_top"
+          android:paddingBottom="@dimen/list_item_margin_bottom"
+          android:paddingLeft="@dimen/item_margin"
+          android:paddingRight="@dimen/item_margin"
+    >
+
+</TextView>
