@@ -1,4 +1,4 @@
-package com.tstine.spark.util;
+package com.tstine.spark.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ViewSwitcher;
 
 import com.tstine.spark.model.Product;
+import com.tstine.spark.util.Logger;
 import com.tstine.spark.view_factory.AbstractViewFactory;
 import com.tstine.spark.view_factory.ConcreteViewFactory;
 import com.tstine.spark.view_factory.GridCellViewMaker;

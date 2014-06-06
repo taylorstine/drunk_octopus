@@ -1,8 +1,6 @@
 package com.tstine.spark.activity;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -16,11 +14,11 @@ import com.tstine.spark.model.Product;
 import com.tstine.spark.rest.GsonOverlord;
 import com.tstine.spark.touch_listener.ForwardingTouchListener;
 import com.tstine.spark.util.ErrorHandler;
-import com.tstine.spark.util.GridAdapter;
+import com.tstine.spark.adapter.GridAdapter;
 import com.tstine.spark.view_factory.AbstractViewFactory;
 import com.tstine.spark.view_factory.ConcreteViewFactory;
-import com.tstine.spark.util.ScrollListenerDelegate;
-import com.tstine.spark.util.ViewClickDelegate;
+import com.tstine.spark.delegate.scroll_delegate.ScrollListenerDelegate;
+import com.tstine.spark.delegate.click_delegate.ViewClickDelegate;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -35,7 +33,7 @@ import org.androidannotations.annotations.ViewById;
  * Created by taylorstine on 5/29/14.
  */
 @EActivity(R.layout.products_main)
-public class ProductActivity extends FragmentActivity {
+public class ProductActivity extends BaseActivity {
 
     @Bean ViewClickDelegate mClickDelegate;
     @Bean ScrollListenerDelegate mScrollListenerDelegate;

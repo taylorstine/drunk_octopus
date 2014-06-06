@@ -1,13 +1,11 @@
 package com.tstine.spark.fetchstate;
 
-import android.app.Activity;
 import android.widget.AbsListView;
 
-import com.tstine.spark.mixin.ScrollStateObserver;
 import com.tstine.spark.mixin.StateMaintainer;
 import com.tstine.spark.rest.Fetcher;
 import com.tstine.spark.util.ErrorHandler;
-import com.tstine.spark.util.GridAdapter;
+import com.tstine.spark.adapter.GridAdapter;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;

@@ -1,4 +1,4 @@
-package com.tstine.spark.util;
+package com.tstine.spark.adapter;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;

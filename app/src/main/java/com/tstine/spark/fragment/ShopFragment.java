@@ -13,9 +13,9 @@ import com.tstine.spark.model.Product;
 import com.tstine.spark.rest.GsonOverlord;
 import com.tstine.spark.touch_listener.ForwardingTouchListener;
 import com.tstine.spark.util.ErrorHandler;
-import com.tstine.spark.util.GridAdapter;
-import com.tstine.spark.util.ScrollListenerDelegate;
-import com.tstine.spark.util.ViewClickDelegate;
+import com.tstine.spark.adapter.GridAdapter;
+import com.tstine.spark.delegate.scroll_delegate.ScrollListenerDelegate;
+import com.tstine.spark.delegate.click_delegate.ViewClickDelegate;
 import com.tstine.spark.view_factory.AbstractViewFactory;
 import com.tstine.spark.view_factory.ConcreteViewFactory;
 

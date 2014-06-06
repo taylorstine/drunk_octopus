@@ -1,9 +1,7 @@
-package com.tstine.spark.util;
+package com.tstine.spark.delegate.scroll_delegate;
 
-import android.app.Activity;
 import android.widget.AbsListView;
 
-import com.tstine.spark.mixin.ScrollStateSubject;
 import com.tstine.spark.mixin.StateMaintainer;
 import com.tstine.spark.fetchstate.FetchState;
 import com.tstine.spark.fetchstate.FetchStateWaiting;
@@ -11,10 +9,6 @@ import com.tstine.spark.fetchstate.FetchStateWaiting;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by taylorstine on 6/1/14.

@@ -5,11 +5,11 @@ import android.os.Handler;
 import android.view.View;
 
 import com.tstine.spark.R;
+import com.tstine.spark.rest.FetchError;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 
-import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.LifecycleCallback;
 

@@ -1,4 +1,4 @@
-package com.tstine.spark.util;
+package com.tstine.spark.delegate.scroll_delegate;
 
 import android.widget.AbsListView;
 

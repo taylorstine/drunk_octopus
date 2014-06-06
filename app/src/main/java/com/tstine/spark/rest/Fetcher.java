@@ -1,7 +1,6 @@
 package com.tstine.spark.rest;
 
 import com.tstine.spark.model.Product;
-import com.tstine.spark.util.FetchError;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;

@@ -1,4 +1,4 @@
-package com.tstine.spark.util;
+package com.tstine.spark.rest;
 
 import android.text.TextUtils;
 

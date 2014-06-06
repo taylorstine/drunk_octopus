@@ -1,23 +1,15 @@
 package com.tstine.spark.fetchstate;
 
-import android.app.Activity;
 import android.widget.AbsListView;
 
-import com.tstine.spark.R;
 import com.tstine.spark.model.Product;
-import com.tstine.spark.util.ErrorHandler;
-import com.tstine.spark.util.FetchError;
-import com.tstine.spark.util.Logger;
+import com.tstine.spark.rest.FetchError;
 import com.tstine.spark.rest.Fetcher;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.Trace;
 
 import java.util.List;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 /**
  * Created by taylorstine on 5/30/14.

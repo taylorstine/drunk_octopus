@@ -1,4 +1,4 @@
-package com.tstine.spark.util;
+package com.tstine.spark.delegate.click_delegate;
 
 import com.facebook.rebound.SimpleSpringListener;
 import com.facebook.rebound.Spring;
