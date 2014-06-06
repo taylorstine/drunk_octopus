@@ -3,7 +3,8 @@
     <color name="button_banner_background">#B8FFFFFF</color>
     <color name="text_color">#4D2D81</color>
     <color name="theme">#2c1258</color>
-    <color name="theme_background">#f1ebfc</color>
+    <!--<color name="theme_background">#f1ebfc</color>-->
+    <color name="theme_background">#DFCFFB</color>
     <color name="theme_light">#ba99f0</color>
     <color name="username_text">#333333</color>
     <color name="price_text">#15921e</color>
